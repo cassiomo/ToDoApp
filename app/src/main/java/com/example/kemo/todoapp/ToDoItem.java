@@ -9,11 +9,17 @@ import java.util.Date;
  */
 public class ToDoItem implements Serializable, Comparable {
 
+    public int id;
+
     private int priority;
+
     private Date dueDate;
+
     private String description;
 
-    public ToDoItem() {}
+    public ToDoItem() {
+        super();
+    }
 
     @Override
     public int compareTo(Object another) {
@@ -24,6 +30,7 @@ public class ToDoItem implements Serializable, Comparable {
     }
 
     public ToDoItem(int priority, Date dueDate, String description) {
+        super();
         this.priority = priority;
         this.dueDate = dueDate;
         this.description = description;

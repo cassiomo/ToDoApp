@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 public class MyActivity extends Activity {
@@ -31,7 +32,7 @@ public class MyActivity extends Activity {
     private ListView lvItems;
     private EditText etNewItem;
     private final int REQUEST_CODE = 20;
-    private final static String fileName = "myToDoApp4.txt";
+    private final static String fileName = "myToDoApp5.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class MyActivity extends Activity {
     }
 
     private void saveItems() {
+        // save to file
         File file = getFilesDir();
         File todoFile = new File(file, fileName);
         try {
@@ -112,6 +114,16 @@ public class MyActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        // save to database
+//        for (ToDoItem toDoItem : todoItems) {
+//            ToDoItemModel toDoItemModel = new ToDoItemModel();
+//            toDoItemModel.id = UUID.randomUUID().toString();
+//            toDoItemModel.priority = toDoItem.getPriority();
+//            toDoItemModel.dueDate = toDoItem.getDueDate();
+//            toDoItemModel.description = toDoItem.getDescription();
+//            toDoItemModel.save();
+//        }
 
     }
 
