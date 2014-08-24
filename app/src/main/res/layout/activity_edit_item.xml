@@ -20,10 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etItem"
+        android:text="@string/edit_item_text"
         android:layout_below="@+id/edItemLabel"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp"
-        android:text="@string/edit_item_text" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,7 +30,41 @@
         android:text="@string/save_edit_item_label"
         android:onClick="onSubmit"
         android:id="@+id/btSave"
+        android:layout_below="@+id/etPriority"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etPriority"
+        android:text="@string/edit_prority"
+        android:layout_below="@+id/editPriorityLabel"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/etDate"
+        android:text="@string/edit_date"
+        android:layout_below="@+id/editDateLabel"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_date_label"
+        android:id="@+id/editDateLabel"
         android:layout_below="@+id/etItem"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp" />
+        android:layout_alignEnd="@+id/btSave" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_priority_label"
+        android:id="@+id/editPriorityLabel"
+        android:layout_below="@+id/etDate"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

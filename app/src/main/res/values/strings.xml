@@ -11,5 +11,10 @@
     <string name="edit_item_below_label">Edit Item Below:</string>
     <string name="edit_item_text">Edit Item</string>
     <string name="save_edit_item_label">Save</string>
+    <string name="edit_item_priority_label">edit_item_priority</string>
+    <string name="edit_prority">Edit Priority</string>
+    <string name="edit_date">Date</string>
+    <string name="edit_date_label">Edit Date</string>
+    <string name="edit_priority_label">Edit Priority</string>
 
 </resources>

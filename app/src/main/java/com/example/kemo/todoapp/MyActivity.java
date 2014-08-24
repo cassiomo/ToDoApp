@@ -11,44 +11,46 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.common.base.Splitter;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
 public class MyActivity extends Activity {
 
-    private ArrayList<String> todoItems;
-    private ArrayAdapter<String> todoAdapter;
+    private ArrayList<ToDoItem> todoItems;
+    private ArrayAdapter<ToDoItem> todoAdapter;
     private ListView lvItems;
     private EditText etNewItem;
     private final int REQUEST_CODE = 20;
+    private final static String fileName = "myToDoApp4.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-        //populateArrayItems();
         lvItems = (ListView) findViewById(R.id.lvItems);
         readItems();
         etNewItem = (EditText) findViewById(R.id.etNewItem);
-        todoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems);
+        todoAdapter = new ArrayAdapter<ToDoItem>(this, android.R.layout.simple_list_item_1, todoItems);
         // attach the adapter to listview itself
         lvItems.setAdapter(todoAdapter);
         setupListViewListener();
         setupListViewOnClickListener();
     }
 
-    // ActivityOne.java
-    public void launchComposeView(String editItemText, String editItemPosition) {
+    public void launchComposeView(ToDoItem toDoItem, String editItemPosition) {
         // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(MyActivity.this, EditItemActivity.class);
-        // put "extras" into the bundle for access in the second activity
-        i.putExtra("editItem", editItemText);
+        i.putExtra("ToDoItem", toDoItem);
         i.putExtra("position", editItemPosition);
         // brings up the second activity
         startActivityForResult(i,20);
@@ -60,40 +62,50 @@ public class MyActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE) {
-            // Extract name value from result extras
-            String editItem = data.getStringExtra("editItem");
+            ToDoItem editItem = (ToDoItem) data.getSerializableExtra("ToDoItem");
             String itemPosition = data.getStringExtra("editItemPosition");
             int position = Integer.valueOf(itemPosition);
             // Toast the name to display temporarily on screen
             todoItems.set(position,editItem);
+            //Collections.sort(todoItems);
             todoAdapter.notifyDataSetChanged();
-//            todoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems);
-//            // attach the adapter to listview itself
-//            lvItems.setAdapter(todoAdapter);
-//            setupListViewListener();
-//            setupListViewOnClickListener();
         }
     }
 
     private void readItems() {
         File file = getFilesDir();
-        File todoFile = new File(file, "todo.txt");
+        File todoFile = new File(file, fileName);
 
         try {
             //final List<String> lines = Files.readLines(file, Charset.defaultCharset());
             //todoItems = new ArrayList<String>(Files.readLines(file, Charset.defaultCharset()));
             List<String> loadItems = FileUtils.readLines(todoFile);
+            for (String item : loadItems) {
+                //Iterable<String> result = Splitter.on(',').split(item);
+                String [] tokens = item.split(" ");
+                ToDoItem toDoItem = new ToDoItem();
+                if (null != tokens[0]) {
+                    toDoItem.setDueDate(new Date(tokens[0]));
+                }
+                if (null != tokens[1]) {
+                    toDoItem.setDescription(tokens[1]);
+                }
+                if (null != tokens[2]) {
+                    toDoItem.setPriority(Integer.valueOf(tokens[2]));
+                }
+            }
+            //List<ToDoItem> loadItems = FileUtils.readLines(todoFile);
 
-            todoItems = new ArrayList<String>(loadItems);
+            //todoItems = new ArrayList<ToDoItem>(loadItems);
         } catch (IOException e) {
-            todoItems = new ArrayList<String>();
+            todoItems = new ArrayList<ToDoItem>();
             e.printStackTrace();
         }
     }
 
     private void saveItems() {
         File file = getFilesDir();
-        File todoFile = new File(file, "todo.txt");
+        File todoFile = new File(file, fileName);
         try {
             //Files.asCharSink(file, Charsets.UTF_8).writeLines(todoItems);
             FileUtils.writeLines(todoFile,todoItems);
@@ -125,19 +137,15 @@ public class MyActivity extends Activity {
         });
     }
 
-    private void populateArrayItems() {
-        todoItems = new ArrayList<String>();
-        todoItems.add("Item 1");
-        todoItems.add("Item 2");
-        todoItems.add("item 3");
-    }
-
     public void onAddedItem(View v) {
         String itemText = etNewItem.getText().toString();
-        todoAdapter.add(itemText);
+        ToDoItem toDoItem = new ToDoItem();
+        toDoItem.setDescription(itemText);
+        toDoItem.setDueDate(new Date());
+        toDoItem.setPriority(0);
+        todoAdapter.add(toDoItem);
         etNewItem.setText("");
         saveItems();
-
     }
 
     @Override
