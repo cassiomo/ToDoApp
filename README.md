@@ -10,8 +10,14 @@ Time Spent: 5 hours
 
 Completed user stories:
 
-Required: User can add item/delete item using Add button
-Required: User can click on the item and modify the item using different screen.
-Required: User can read and save the items using file system.
+1. Required: User can add item/delete item using Add button
+2  Required: User can click on the item and modify the item using different screen.
+3. Required: User can read and save the items using file system.
+
+Extending Todo App: 
+
+Complete Extended User Stories:
+1.  Add support for completion due dates for items
+2.  Add support for priority for items 
 
 ![Alt text](https://github.com/cassiomo/ToDoApp/blob/master/todoapp.gif "ToDoApp gif") 
