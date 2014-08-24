@@ -76,6 +76,7 @@ public class MyActivity extends Activity {
     private void readItems() {
         File file = getFilesDir();
         File todoFile = new File(file, fileName);
+        todoItems = new ArrayList<ToDoItem>();
 
         try {
             //final List<String> lines = Files.readLines(file, Charset.defaultCharset());
@@ -94,12 +95,12 @@ public class MyActivity extends Activity {
                 if (null != tokens[2]) {
                     toDoItem.setPriority(Integer.valueOf(tokens[2]));
                 }
+                todoItems.add(toDoItem);
             }
             //List<ToDoItem> loadItems = FileUtils.readLines(todoFile);
 
             //todoItems = new ArrayList<ToDoItem>(loadItems);
         } catch (IOException e) {
-            todoItems = new ArrayList<ToDoItem>();
             e.printStackTrace();
         }
     }
@@ -115,15 +116,15 @@ public class MyActivity extends Activity {
             e.printStackTrace();
         }
 
-//        // save to database
-//        for (ToDoItem toDoItem : todoItems) {
-//            ToDoItemModel toDoItemModel = new ToDoItemModel();
-//            toDoItemModel.id = UUID.randomUUID().toString();
-//            toDoItemModel.priority = toDoItem.getPriority();
-//            toDoItemModel.dueDate = toDoItem.getDueDate();
-//            toDoItemModel.description = toDoItem.getDescription();
-//            toDoItemModel.save();
-//        }
+        // save to database
+        for (ToDoItem toDoItem : todoItems) {
+            ToDoItemModel toDoItemModel = new ToDoItemModel();
+            toDoItemModel.id = UUID.randomUUID().toString();
+            toDoItemModel.priority = toDoItem.getPriority();
+            toDoItemModel.dueDate = toDoItem.getDueDate();
+            toDoItemModel.description = toDoItem.getDescription();
+            toDoItemModel.save();
+        }
 
     }
 
