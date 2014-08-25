@@ -20,6 +20,7 @@ public class EditItemActivity extends Activity {
     private EditText etItem;
     private EditText etDate;
     private EditText etPriority;
+    private int remoteId;
     private final int REQUEST_CODE = 20;
 
     @Override
@@ -27,8 +28,8 @@ public class EditItemActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
         Intent intent = getIntent();
-        //intentEditItem = intent.getStringExtra("editItem");
         intentEditItem = (ToDoItem)intent.getSerializableExtra("ToDoItem");
+        remoteId = intentEditItem.remoteId;
         editItemPosition = intent.getStringExtra("position");
         etItem = (EditText) findViewById(R.id.etItem);
         etDate = (EditText) findViewById(R.id.etDate);
@@ -37,14 +38,14 @@ public class EditItemActivity extends Activity {
             etItem.setText(intentEditItem.getDescription());
         }
         etPriority.setText(String.valueOf(intentEditItem.getPriority()));
+        SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
+        String date;
         if (null != intentEditItem.getDueDate()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
-            String date = sdf.format(intentEditItem.getDueDate());
+            date = sdf.format(intentEditItem.getDueDate());
             etDate.setText(date);
         } else {
             Date today = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
-            String date = sdf.format(today);
+            date = sdf.format(today);
             etDate.setText(date);
         }
     }
@@ -71,7 +72,10 @@ public class EditItemActivity extends Activity {
 
     public void onSubmit(View view) {
         Intent intent = new Intent();
-        ToDoItem toDoItem = new ToDoItem(Integer.valueOf(etPriority.getText().toString()),new Date(etDate.getText().toString()), etItem.getText().toString());
+        ToDoItem toDoItem = new ToDoItem(remoteId,
+                Integer.valueOf(etPriority.getText().toString()),
+                new Date(etDate.getText().toString()),
+                etItem.getText().toString());
         intent.putExtra("ToDoItem",toDoItem);
         intent.putExtra("editItemPosition", editItemPosition);
         setResult(RESULT_OK, intent);
