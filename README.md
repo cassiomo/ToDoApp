@@ -20,5 +20,6 @@ Complete Extended User Stories:
 
 1.  Add support for completion due dates for items
 2.  Add support for priority for items 
+3.  Persist the todo app in SQLite instead of using a text file 
 
 ![Alt text](https://github.com/cassiomo/ToDoApp/blob/master/todoapp.gif "ToDoApp gif") 
