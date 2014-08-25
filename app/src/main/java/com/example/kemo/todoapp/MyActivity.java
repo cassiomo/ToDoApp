@@ -79,10 +79,6 @@ public class MyActivity extends Activity {
     private void readItemsFromDB() {
 
         List<ToDoItemModel> toDoItemModels = ToDoItemModel.getAll();
-        System.out.println(toDoItemModels.size());
-        for (ToDoItemModel toDoItemModel : toDoItemModels) {
-            System.out.println(toDoItemModel);
-        }
         for (ToDoItemModel toDoItemModel : toDoItemModels) {
             ToDoItem toDoItem = new ToDoItem();
             toDoItem.setRemoteId(toDoItemModel.remoteId);
